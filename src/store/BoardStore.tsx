@@ -145,7 +145,7 @@ export default class BoardStore {
 
     fillItem() {
         for (let colIdx = 0; colIdx < this.colLength; colIdx++) {
-            for (let rowIdx = this.rowLength - 1; rowIdx > 0; rowIdx--) {
+            for (let rowIdx = this.rowLength - 1; rowIdx >= 0; rowIdx--) {
                 const currentItem = this.getItem(rowIdx, colIdx);
                 if (currentItem && currentItem.status == ItemStatusEnum.NORMAL) {
                     continue;
