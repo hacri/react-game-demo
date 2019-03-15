@@ -9,6 +9,7 @@ export default class Board extends Component<{
     board: Array<Item>,
     rowLength: number,
     colLength: number,
+    removeItem: Function,
 }> {
     render() {
         const boardStyle = {
@@ -19,7 +20,8 @@ export default class Board extends Component<{
         return (
             <div className="board" style={boardStyle}>
                 {this.props.board.map((item) =>
-                    <ItemComponent key={item.id} item={item}></ItemComponent>
+                    <ItemComponent key={item.id} item={item}
+                        removeItem={this.props.removeItem}></ItemComponent>
                 )}
             </div>
         )

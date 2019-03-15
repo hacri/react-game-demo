@@ -35,9 +35,10 @@ class App extends Component<{ store: BoardStore }> {
 
         <Board board={this.props.store.board}
           rowLength={this.props.store.rowLength}
-          colLength={this.props.store.colLength}></Board>
+          colLength={this.props.store.colLength}
+          removeItem={this.props.store.removeItem.bind(this.props.store)}></Board>
 
-        <button onClick={this.test}>test</button>
+        <button onClick={this.test}>remove 2,2</button>
       </div>
     );
   }

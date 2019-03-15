@@ -5,7 +5,8 @@ import { ItemStatusEnum } from '../enums';
 
 @observer
 export default class ItemComponent extends Component<{
-    item: Item
+    item: Item,
+    removeItem: Function,
 }>{
     render() {
         const item = this.props.item;
@@ -23,6 +24,7 @@ export default class ItemComponent extends Component<{
                 item.status == ItemStatusEnum.REMOVING && item.ttl === 0 ? 'remove-immediately' : null,
             ].join(' ')}
                 style={itemStyle}
+                onClick={() => this.props.removeItem(item.coord.rowIdx, item.coord.colIdx)}
             >
                 {item.status == ItemStatusEnum.NORMAL && item.type}
                 {item.status == ItemStatusEnum.REMOVING && <span>{item.type} * {item.ttl}</span>}
