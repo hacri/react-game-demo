@@ -22,16 +22,16 @@ export default class ItemComponent extends Component<{
             'item',
             `item-status_${item.status}`,
             `item-type-${item.type}`,
-            item.status == ItemStatusEnum.REMOVING && item.ttl === 0 ? 'remove-immediately' : null,
-            'animated',
         ];
 
-        let currentAnimate ='fadeIn';
+        let currentAnimate = 'fadeIn';
 
         if (item.status == ItemStatusEnum.REMOVED) {
             content = '';
             currentAnimate = '';
         } else if (item.status == ItemStatusEnum.REMOVING && item.ttl == 0) {
+            itemClassList.push('remove-immediately');
+
             if (item.type == ItemTypeEnum.NORMAL) {
                 content = '💢';
             } else {
@@ -52,6 +52,7 @@ export default class ItemComponent extends Component<{
         }
 
         if (currentAnimate) {
+            itemClassList.push('animated');
             itemClassList.push(currentAnimate);
         }
 

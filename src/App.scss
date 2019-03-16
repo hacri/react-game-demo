@@ -65,6 +65,11 @@
 
   transition: top ease 0.5s;
 
+  &:hover,
+  &.selected {
+    background: rgba(238, 228, 218, 0.35);
+  }
+
   &.remove-immediately {
     background: red;
   }
