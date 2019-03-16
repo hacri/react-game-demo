@@ -187,8 +187,15 @@ export default class BoardStore {
         }
 
         let hasInRemoving = true;
+        let firstFlag = true;
         while (hasInRemoving) {
             hasInRemoving = false;
+
+            if (!firstFlag) {
+                await Timeout.set(this.waitTime);
+            } else {
+                firstFlag = false;
+            }
 
             runInAction(() => {
                 this.board.map(item => {
@@ -203,17 +210,21 @@ export default class BoardStore {
                     }
                 });
             });
-
-            await Timeout.set(this.waitTime);
         }
 
         console.log('start fill')
-
+        firstFlag = true;
         while (this.isNeedFillItem()) {
+
+            if (!firstFlag) {
+                await Timeout.set(this.waitTime);
+            } else {
+                firstFlag = false;
+            }
+
             runInAction(() => {
                 this.fillItem();
             })
-            await Timeout.set(this.waitTime);
         }
 
         this.inProcess = false;
