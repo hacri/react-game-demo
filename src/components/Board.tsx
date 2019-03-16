@@ -19,10 +19,12 @@ export default class Board extends Component<{
 
         return (
             <div className="board" style={boardStyle}>
-                {this.props.board.map((item) =>
-                    <ItemComponent key={item.id} item={item}
-                        removeItem={this.props.removeItem}></ItemComponent>
-                )}
+                <div className="item-container">
+                    {this.props.board.map((item) =>
+                        <ItemComponent key={item.id} item={item}
+                            removeItem={this.props.removeItem}></ItemComponent>
+                    )}
+                </div>
             </div>
         )
     }

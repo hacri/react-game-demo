@@ -22,6 +22,8 @@ export default class ItemComponent extends Component<{
                 `item-status_${item.status}`,
                 `item-type-${item.type}`,
                 item.status == ItemStatusEnum.REMOVING && item.ttl === 0 ? 'remove-immediately' : null,
+                'animated',
+                'fadeIn'
             ].join(' ')}
                 style={itemStyle}
                 onClick={() => this.props.removeItem(item.coord.rowIdx, item.coord.colIdx)}

@@ -8,6 +8,7 @@
     "@types/node": "11.11.3",
     "@types/react": "16.8.8",
     "@types/react-dom": "16.8.2",
+    "animate.css": "^3.7.0",
     "await-timeout": "^0.3.0",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
