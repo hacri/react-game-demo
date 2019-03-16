@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Item } from '../type';
 import { observer } from "mobx-react";
-import { ItemStatusEnum } from '../enums';
+import { ItemStatusEnum, ItemTypeEnum } from '../enums';
+import { timeout } from 'q';
 
 @observer
 export default class ItemComponent extends Component<{
@@ -16,21 +17,51 @@ export default class ItemComponent extends Component<{
             top: item.coord.rowIdx * 50
         };
 
+        let content;
+        const itemClassList = [
+            'item',
+            `item-status_${item.status}`,
+            `item-type-${item.type}`,
+            item.status == ItemStatusEnum.REMOVING && item.ttl === 0 ? 'remove-immediately' : null,
+            'animated',
+        ];
+
+        let currentAnimate;
+
+        if (item.status == ItemStatusEnum.REMOVED) {
+            content = '';
+        } else if (item.status == ItemStatusEnum.REMOVING && item.ttl == 0) {
+            if (item.type == ItemTypeEnum.NORMAL) {
+                content = '💢';
+            } else {
+                content = '💥'
+
+                currentAnimate = 'flash';
+            }
+        } else {
+            if (item.type == ItemTypeEnum.NORMAL) {
+                content = '🍎';
+            } else if (item.type == ItemTypeEnum.ROW_BOOM) {
+                content = '🍌';
+            } else if (item.type == ItemTypeEnum.COL_BOOM) {
+                content = '🍉';
+            } else if (item.type == ItemTypeEnum.BLOCK_BOOM) {
+                content = '🍒';
+            }
+        }
+
+        if (currentAnimate) {
+            itemClassList.push(currentAnimate);
+        } else {
+            itemClassList.push('fadeIn');
+        }
+
         return (
-            <div key={item.id} className={[
-                'item',
-                `item-status_${item.status}`,
-                `item-type-${item.type}`,
-                item.status == ItemStatusEnum.REMOVING && item.ttl === 0 ? 'remove-immediately' : null,
-                'animated',
-                'fadeIn'
-            ].join(' ')}
+            <div key={item.id} className={itemClassList.join(' ')}
                 style={itemStyle}
                 onClick={() => this.props.removeItem(item.coord.rowIdx, item.coord.colIdx)}
             >
-                {item.status == ItemStatusEnum.NORMAL && item.type}
-                {item.status == ItemStatusEnum.REMOVING && <span>{item.type} * {item.ttl}</span>}
-                {item.status == ItemStatusEnum.PENDING && <span>{item.type} -</span>}
+                {content}
             </div>
         );
     }

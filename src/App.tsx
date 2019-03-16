@@ -38,6 +38,11 @@ class App extends Component<{ store: BoardStore }> {
             colLength={this.props.store.colLength}
             removeItem={this.props.store.removeItem.bind(this.props.store)}></Board>
 
+          <ul>
+            <li>🍌 = Row BOMB</li>
+            <li>🍉 = Column BOMB</li>
+            <li>🍒 = Block BOMB</li>
+          </ul>
           <button onClick={this.test}>remove 2,2</button>
         </div>
       </div>
