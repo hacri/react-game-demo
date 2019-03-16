@@ -40,7 +40,6 @@ class App extends Component<{ store: BoardStore }> {
             <li>🍉 = Column BOMB</li>
             <li>🍒 = Block BOMB</li>
           </ul>
-          <button onClick={this.test}>remove 2,2</button>
         </div>
       </div>
     );
