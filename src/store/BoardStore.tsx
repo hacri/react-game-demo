@@ -14,6 +14,7 @@ export default class BoardStore {
     private inProcess = true;
     dirtyList: Array<Coord> = [];
 
+    firstSelectCoord: Coord | null = null
     constructor() {
         autorun(this.report.bind(this), { delay: 300 })
 
@@ -171,14 +172,54 @@ export default class BoardStore {
     }
 
     @action
-    async removeItem(rowIdx: number, colIdx: number) {
+    clickItem(rowIdx: number, colIdx: number) {
+        if (this.inProcess) {
+            return;
+        }
+
+        if (!this.firstSelectCoord) {
+            this.firstSelectCoord = {
+                rowIdx, colIdx,
+            }
+            return;
+        }
+
+        const coordList: Array<Coord> = [];
+
+        const rowIdxStart = Math.min(rowIdx, this.firstSelectCoord.rowIdx);
+        const rowIdxEnd = Math.max(rowIdx, this.firstSelectCoord.rowIdx);
+        const colIdxStart = Math.min(colIdx, this.firstSelectCoord.colIdx);
+        const colIdxEnd = Math.max(colIdx, this.firstSelectCoord.colIdx);
+
+        for (let tmpRowIdx = rowIdxStart; tmpRowIdx <= rowIdxEnd; tmpRowIdx++) {
+            for (let tmpColIdx = colIdxStart; tmpColIdx <= colIdxEnd; tmpColIdx++) {
+                coordList.push({ rowIdx: tmpRowIdx, colIdx: tmpColIdx });
+            }
+        }
+
+        this.firstSelectCoord = null;
+
+        this.removeItems(coordList);
+    }
+
+
+    @action
+    removeItem(rowIdx: number, colIdx: number) {
+        this.removeItems([{ rowIdx, colIdx }]);
+    }
+
+    async removeItems(coordList: Array<Coord>) {
         if (this.inProcess) {
             return;
         }
         this.inProcess = true;
 
         console.log('start remove')
-        this.markRemoveStatus(rowIdx, colIdx);
+
+        coordList.map(coord => {
+            this.markRemoveStatus(coord.rowIdx, coord.colIdx);
+        })
+
         let ttl = 1;
 
         while (this.dirtyList.length) {
