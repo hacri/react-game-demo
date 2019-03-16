@@ -3,26 +3,24 @@ import { Item } from '../type';
 import { observer } from "mobx-react";
 import { ItemStatusEnum } from '../enums';
 import ItemComponent from './Item';
+import BoardStore from '../store/BoardStore';
 
 @observer
 export default class Board extends Component<{
-    board: Array<Item>,
-    rowLength: number,
-    colLength: number,
-    removeItem: Function,
+    boardStore: BoardStore
 }> {
     render() {
         const boardStyle = {
-            height: this.props.rowLength * 50,
-            width: this.props.colLength * 50,
+            height: this.props.boardStore.rowLength * 50,
+            width: this.props.boardStore.colLength * 50,
         }
 
         return (
             <div className="board" style={boardStyle}>
                 <div className="item-container">
-                    {this.props.board.map((item) =>
+                    {this.props.boardStore.board.map((item) =>
                         <ItemComponent key={item.id} item={item}
-                            removeItem={this.props.removeItem}></ItemComponent>
+                            boardStore={this.props.boardStore}></ItemComponent>
                     )}
                 </div>
             </div>

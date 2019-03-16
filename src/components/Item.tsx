@@ -3,12 +3,21 @@ import { Item } from '../type';
 import { observer } from "mobx-react";
 import { ItemStatusEnum, ItemTypeEnum } from '../enums';
 import { timeout } from 'q';
+import BoardStore from '../store/BoardStore';
 
 @observer
 export default class ItemComponent extends Component<{
     item: Item,
-    removeItem: Function,
+    boardStore: BoardStore,
 }>{
+    clickItem: Function;
+
+    constructor(props: Readonly<{ item: Item; boardStore: BoardStore; clickItem: Function; hoverItem: Function; }>) {
+        super(props);
+
+        this.clickItem = this.props.boardStore.clickItem.bind(this.props.boardStore);
+    }
+
     render() {
         const item = this.props.item;
 
@@ -59,7 +68,7 @@ export default class ItemComponent extends Component<{
         return (
             <div key={item.id} className={itemClassList.join(' ')}
                 style={itemStyle}
-                onClick={() => this.props.removeItem(item.coord.rowIdx, item.coord.colIdx)}
+                onClick={() => this.clickItem(item.coord.rowIdx, item.coord.colIdx)}
             >
                 {content}
             </div>

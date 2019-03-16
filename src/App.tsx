@@ -33,10 +33,7 @@ class App extends Component<{ store: BoardStore }> {
           </a>
         </header> */}
         <div className="main">
-          <Board board={this.props.store.board}
-            rowLength={this.props.store.rowLength}
-            colLength={this.props.store.colLength}
-            removeItem={this.props.store.removeItem.bind(this.props.store)}></Board>
+          <Board boardStore={this.props.store}></Board>
 
           <ul>
             <li>🍌 = Row BOMB</li>
