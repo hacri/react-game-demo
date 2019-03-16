@@ -6,15 +6,17 @@ import Timeout from 'await-timeout';
 export default class BoardStore {
     @observable board: Array<Item> = []
 
+    @observable
+    firstSelectCoord: Coord | null = null
+    
     readonly rowLength = 8
     readonly colLength = 8
-    readonly waitTime = 500
+    readonly waitTime = 300
 
     increseId = 1
     private inProcess = true;
     dirtyList: Array<Coord> = [];
 
-    firstSelectCoord: Coord | null = null
     constructor() {
         autorun(this.report.bind(this), { delay: 300 })
 

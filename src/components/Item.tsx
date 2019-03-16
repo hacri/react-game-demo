@@ -65,6 +65,13 @@ export default class ItemComponent extends Component<{
             itemClassList.push(currentAnimate);
         }
 
+        if (this.props.boardStore.firstSelectCoord) {
+            const selectedCoord = this.props.boardStore.firstSelectCoord;
+            if (item.coord.rowIdx == selectedCoord.rowIdx && item.coord.colIdx == selectedCoord.colIdx) {
+                itemClassList.push('selected');
+            }
+        }
+
         return (
             <div key={item.id} className={itemClassList.join(' ')}
                 style={itemStyle}
