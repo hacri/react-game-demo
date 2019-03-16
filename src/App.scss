@@ -44,6 +44,7 @@
 .board {
   padding: 5px;
   background: #bbada0;
+  border-radius: 5px;
 }
 
 .item-container {
@@ -58,20 +59,17 @@
   background: #eee4da;
   border-radius: 4px;
 
+  line-height: 40px;
+
   cursor: pointer;
 
   transition: top ease 0.5s;
 
-  .remove-immediately {
+  &.remove-immediately {
     background: red;
   }
 
-  .item-status-2 {
-    // removing
-    color: grey;
-  }
-
-  .item-status_-1 {
-    color: red;
+  &.item-status_-1 {
+    opacity: 0;
   }
 }

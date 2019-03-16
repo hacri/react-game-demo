@@ -26,10 +26,11 @@ export default class ItemComponent extends Component<{
             'animated',
         ];
 
-        let currentAnimate;
+        let currentAnimate ='fadeIn';
 
         if (item.status == ItemStatusEnum.REMOVED) {
             content = '';
+            currentAnimate = '';
         } else if (item.status == ItemStatusEnum.REMOVING && item.ttl == 0) {
             if (item.type == ItemTypeEnum.NORMAL) {
                 content = '💢';
@@ -52,8 +53,6 @@ export default class ItemComponent extends Component<{
 
         if (currentAnimate) {
             itemClassList.push(currentAnimate);
-        } else {
-            itemClassList.push('fadeIn');
         }
 
         return (
